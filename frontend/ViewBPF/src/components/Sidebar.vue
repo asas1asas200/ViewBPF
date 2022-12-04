@@ -3,26 +3,33 @@
     <router-link to="/">
       <el-menu-item index="/">
         <el-icon><icon-menu /></el-icon>
-        <span>Navigator Two</span>
+        <span>Home</span>
+      </el-menu-item>
+    </router-link>
+    <router-link to="/add">
+      <el-menu-item index="/add">
+        <el-icon><circle-plus-filled /></el-icon>
+        <span>New</span>
       </el-menu-item>
     </router-link>
     <router-link to="/about">
       <el-menu-item index="/about">
-        <el-icon><document /></el-icon>
-        <span>Navigator Three</span>
+        <el-icon><info-filled /></el-icon>
+        <span>About</span>
       </el-menu-item>
     </router-link>
     <el-menu-item index="3">
       <el-icon><setting /></el-icon>
-      <span>Navigator Four</span>
+      <span>Settings</span>
     </el-menu-item>
   </el-menu>
 </template>
 
 <script lang="ts" setup>
 import {
-  Document,
   Menu as IconMenu,
+  CirclePlusFilled,
+  InfoFilled,
   Setting,
 } from '@element-plus/icons-vue'
 

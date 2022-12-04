@@ -3,6 +3,7 @@
     <img alt="Vue logo" src="@/assets/logo.svg">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <el-button type="primary" @click="ping"> Ping </el-button>
+    <el-button type="success" @click="test"> Test </el-button>
   </div>
 </template>
 
@@ -20,6 +21,19 @@ export default {
   methods: {
     ping() {
       axios.get('http://localhost:5000/api/ping').then(res => {
+        ElMessage({
+          message: res.data,
+          type: 'success'
+        })
+      }).catch(err => {
+        ElMessage({
+          message: err,
+          type: 'error'
+        })
+      })
+    }, 
+    test() {
+      axios.get('http://localhost:5000/api/example/test').then(res => {
         ElMessage({
           message: res.data,
           type: 'success'

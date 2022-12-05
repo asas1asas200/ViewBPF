@@ -9,7 +9,7 @@
       </el-radio-group>
     </el-form-item>
     <el-collapse-transition>
-    <simple-http-parse :form="form" v-show="form.program === 'Simple HTTP Parse'"/>
+    <simple-http-parse :options="form.options" v-if="form.program === 'Simple HTTP Parse'"/>
     </el-collapse-transition>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">Create</el-button>
@@ -19,8 +19,10 @@
 </template>
 
 <script setup>
+import axios from 'axios';
 import { reactive } from 'vue'
 import SimpleHttpParse from '@/components/forms/options/SimpleHttpParse.vue'
+import { ElMessage } from 'element-plus';
 
 const programs = [
   'Simple HTTP Parse',
@@ -32,10 +34,30 @@ const form = reactive({
   name: '',
   program: '',
   desc: '',
-  interfaceName: '',
+  options: {}
 })
 
 const onSubmit = () => {
-  console.log('submit!', form)
+  switch(form.program) {
+    case 'Simple HTTP Parse':
+      axios.post('http://localhost:5000/api/example/simple_http_parse', form).then(res => {
+        ElMessage({
+          message: res.data,
+          type: 'success'
+        })
+      }).catch(err => {
+        ElMessage({
+          message: err,
+          type: 'error'
+        })
+      })
+      console.log(form)
+      break
+    case 'Disk Monitoring':
+      console.log(form)
+      break
+    default:
+      console.log('No program selected')
+  }
 }
 </script>

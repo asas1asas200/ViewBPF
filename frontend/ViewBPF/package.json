@@ -7,9 +7,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@highlightjs/vue-plugin": "^2.1.0",
     "@vue/cli-service": "^5.0.8",
     "axios": "^1.2.0",
     "element-plus": "^2.2.21",
+    "highlight.js": "^11.7.0",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6"
   },

@@ -11,6 +11,10 @@
     <el-collapse-transition>
     <simple-http-parse :options="form.options" v-if="form.program === 'Simple HTTP Parse'"/>
     </el-collapse-transition>
+    <el-form-item label="Code">
+      <highlightjs language="c"
+        :code=code />
+    </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">Create</el-button>
       <el-button>Cancel</el-button>
@@ -19,23 +23,39 @@
 </template>
 
 <script setup>
-import axios from 'axios';
-import { reactive } from 'vue'
+import axios from 'axios'
+import { reactive, ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import 'highlight.js/lib/common'
+import hljsVuePlugin from '@highlightjs/vue-plugin'
+import 'highlight.js/styles/atom-one-dark.css'
 import SimpleHttpParse from '@/components/forms/options/SimpleHttpParse.vue'
-import { ElMessage } from 'element-plus';
+
 
 const programs = [
   'Simple HTTP Parse',
   'Disk Monitoring',
 ]
 
+const highlightjs = hljsVuePlugin.component
+
 // do not use same name with ref
 const form = reactive({
   name: '',
   program: '',
   desc: '',
+  code: '',
   options: {}
 })
+
+const code = `
+#include <stdio.h>
+int main(void) {
+  puts("hello world");
+  return 0;
+}
+`
+
 
 const onSubmit = () => {
   switch(form.program) {
@@ -60,4 +80,5 @@ const onSubmit = () => {
       console.log('No program selected')
   }
 }
+
 </script>

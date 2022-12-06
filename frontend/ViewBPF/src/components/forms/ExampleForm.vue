@@ -1,10 +1,10 @@
 <template>
   <el-form :model="form" label-width="120px">
-    <el-form-item label="Activity name">
+    <el-form-item label="Program name">
       <el-input v-model="form.name" />
     </el-form-item>
     <el-form-item label="Program">
-      <el-radio-group v-model="form.program">
+      <el-radio-group v-model="form.program" @change="onProgramChange">
         <el-radio v-for="program in programs" :label="program" />
       </el-radio-group>
     </el-form-item>
@@ -12,8 +12,10 @@
     <simple-http-parse :options="form.options" v-if="form.program === 'Simple HTTP Parse'"/>
     </el-collapse-transition>
     <el-form-item label="Code">
-      <highlightjs language="c"
-        :code=code />
+      <el-scrollbar max-height="60vh">
+        <highlightjs class="code-content" language="c"
+          :code=code style="text-align: left;" />
+      </el-scrollbar>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">Create</el-button>
@@ -21,6 +23,7 @@
     </el-form-item>
   </el-form>
 </template>
+
 
 <script setup>
 import axios from 'axios'
@@ -30,7 +33,7 @@ import 'highlight.js/lib/common'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 import 'highlight.js/styles/atom-one-dark.css'
 import SimpleHttpParse from '@/components/forms/options/SimpleHttpParse.vue'
-
+import SimpleHttpParseCode from '@/assets/codes/http-parse-simple.c'
 
 const programs = [
   'Simple HTTP Parse',
@@ -48,14 +51,16 @@ const form = reactive({
   options: {}
 })
 
-const code = `
-#include <stdio.h>
-int main(void) {
-  puts("hello world");
-  return 0;
+const sampleCodeMapping = {
+  'Simple HTTP Parse': SimpleHttpParseCode,
+  'Disk Monitoring': ''
 }
-`
 
+const code = ref('')
+
+const onProgramChange = () => {
+  code.value = sampleCodeMapping[form.program]
+}
 
 const onSubmit = () => {
   switch(form.program) {

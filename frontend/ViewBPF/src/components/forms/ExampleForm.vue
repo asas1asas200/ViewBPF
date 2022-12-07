@@ -42,12 +42,15 @@ const programs = [
 
 const highlightjs = hljsVuePlugin.component
 
+
+const code = ref('')
+
 // do not use same name with ref
 const form = reactive({
   name: '',
   program: '',
   desc: '',
-  code: '',
+  code: code,
   options: {}
 })
 
@@ -55,8 +58,6 @@ const sampleCodeMapping = {
   'Simple HTTP Parse': SimpleHttpParseCode,
   'Disk Monitoring': ''
 }
-
-const code = ref('')
 
 const onProgramChange = () => {
   code.value = sampleCodeMapping[form.program]

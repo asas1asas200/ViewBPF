@@ -1,6 +1,6 @@
 <template>
   <el-form-item label="Interface Name">
-    <el-input v-model="options.interfaceName" placeholder="default eth0" />
+    <el-input v-model="options.interface" placeholder="default eth0" />
   </el-form-item>
 </template>
 

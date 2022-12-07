@@ -1,6 +1,8 @@
+import json
 from flask import Blueprint, request
-from ..tracer import Tracer
+import pika
 from ..model import r
+
 
 example = Blueprint('example', __name__)
 
@@ -13,6 +15,10 @@ def test():
 @example.route('/simple_http_parse', methods=['POST'])
 def simpleHttpParse():
 	data = request.get_json()
-	print(data)
-	tracer = Tracer(r, **data)
-	return f"New tracer {data['name']} created."
+	connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+	channel = connection.channel()
+	channel.queue_declare(queue='program')
+	channel.basic_publish(
+		exchange='', routing_key='program', body=json.dumps(data))
+	connection.close()
+	return f"New program {data['name']} created."

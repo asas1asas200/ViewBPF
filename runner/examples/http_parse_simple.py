@@ -7,10 +7,9 @@ from runner import Runner
 
 
 class HttpParseSimple(Runner):
-	def __init__(self, r, name, program, options, **kwargs):
-		super().__init__(r, name, program)
+	def __init__(self, r, name, program, code, options, **kwargs):
+		super().__init__(r, name, program, code)
 		self.program = program
-		self.code = kwargs['code']
 		self.interface = options['interface']
 
 	def build(self):

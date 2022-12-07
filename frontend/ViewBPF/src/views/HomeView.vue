@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1>ViewBPF</h1>
-    <el-scrollbar>
+    <el-scrollbar max-height="90vh">
       <el-card v-for="program in programs">
         <el-row class="transition-box">
           <el-col :span="8">{{program.name}}</el-col>

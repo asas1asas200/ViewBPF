@@ -1,26 +1,19 @@
 <template>
-  <div class="common-layout">
-    <el-container>
-      <el-header>Program {{route.params.id}}</el-header>
-      <el-main>{{info}}</el-main>
-    </el-container>
-  </div>
+  <Suspense>
+    <template #default>
+      <program-info />
+    </template>
+    <template #fallback>
+      <div v-loading="true" element-loading-text="Loading..." element-loading-background="transparent" style="height: 100%;"></div>
+    </template>
+  </Suspense>
 </template>
+<style scoped>
+.el-loading-mask {
+  background: transparent;
+}
+</style>
 <script setup>
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-import axios from 'axios'
-import { ElMessage } from 'element-plus'
-
-const route = useRoute()
-const info = ref('')
-axios.get('http://localhost:5000/api/programs/' + route.params.id).then(res => {
-  console.log(res.data)
-  info.value = res.data
-}).catch(err => {
-  ElMessage({
-    message: err,
-    type: 'error'
-  })
-})
+import { defineAsyncComponent } from 'vue';
+const ProgramInfo = defineAsyncComponent(() => import('@/components/ProgramInfo.vue'));
 </script>

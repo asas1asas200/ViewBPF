@@ -22,6 +22,11 @@ const routes = [
       return import(/* webpackChunkName: "about" */ "../views/AboutView.vue");
     },
   },
+  {
+    path: "/program/:id",
+    name: "program",
+    component: () => import("../views/ProgramView.vue"),
+  },
 ];
 
 const router = createRouter({

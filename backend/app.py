@@ -5,16 +5,12 @@ from flask_cors import CORS
 
 from .model import r
 from .routes.example import example
+from .routes.programs import programs
 
 app = Flask(__name__)
 
 
 CORS(app, resources={r'/api/*': {'origins': '*'}})
-
-
-@app.route('/api/programs')
-def programs():
-	return [json.loads(pinfo) for pinfo in r.lrange('programs', 0, -1)] if r.exists('programs') else []
 
 
 @app.route('/api/ping')
@@ -28,3 +24,4 @@ def hello_world():
 
 
 app.register_blueprint(example, url_prefix='/api/example')
+app.register_blueprint(programs, url_prefix='/api/programs')

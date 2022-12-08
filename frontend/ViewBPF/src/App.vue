@@ -23,4 +23,10 @@ import Sidebar from '@/components/Sidebar.vue'
   text-align: center;
   color: #2c3e50;
 }
+
+h1 {
+  font-size: 32px;
+  color: #409EFF;
+  margin-bottom: 10px;
+}
 </style>

@@ -14,14 +14,6 @@
   </div>
 </template>
 
-<style scoped>
-h1 {
-  font-size: 32px;
-  color: #409EFF;
-  margin-bottom: 10px;
-}
-</style>
-
 <script setup>
 import { useRoute } from 'vue-router'
 import axios from 'axios'

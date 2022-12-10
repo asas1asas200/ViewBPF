@@ -31,7 +31,6 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const programs = ref([]);
 axios.get('http://localhost:5000/api/programs').then(res => {
-  console.log(res.data)
   programs.value = res.data
 }).catch(err => {
   ElMessage({

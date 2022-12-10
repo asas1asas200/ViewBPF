@@ -36,9 +36,10 @@ class HttpParseSimple(Runner):
 			tcp_header_length = tcp_header_length & 0xF0
 			tcp_header_length = tcp_header_length >> 2
 			payload_offset = ETH_HLEN + ip_header_length + tcp_header_length
+			data = ''
 			for i in range(payload_offset, len(packet_bytearray) - 1):
 				if (packet_bytearray[i] == 0x0A):
 					if (packet_bytearray[i - 1] == 0x0D):
 						break
-				print("%c" % chr(packet_bytearray[i]), end="")
-			print("")
+				data += chr(packet_bytearray[i])
+			self.log({'data': data})

@@ -1,5 +1,6 @@
 import json
 from uuid import uuid4
+from datetime import datetime
 from subprocess import Popen, PIPE
 
 
@@ -18,7 +19,8 @@ class Runner:
 			{'name': self.name, 'program': self.program, 'code': self.code}))
 
 	def log(self, data):
-		self.r.rpush(self.key, json.dumps(data))
+		data['time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+		self.r.rpush(self.key + ':records', json.dumps(data))
 
 	def verify(self):
 		p = Popen(['python3', 'verify.py'], stdin=PIPE, stdout=PIPE, stderr=PIPE)

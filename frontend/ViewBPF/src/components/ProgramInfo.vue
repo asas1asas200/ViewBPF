@@ -11,6 +11,7 @@
         </el-collapse-item>
       </el-collapse>
     </el-scrollbar>
+    <SimpleHttpParseCharts />
   </div>
 </template>
 
@@ -21,6 +22,7 @@ import { ElMessage } from 'element-plus'
 import 'highlight.js/lib/common'
 import 'highlight.js/styles/atom-one-dark.css'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
+import SimpleHttpParseCharts from './charts/SimpleHttpParseCharts.vue'
 
 const highlightjs = hljsVuePlugin.component
 

@@ -14,15 +14,24 @@ def get_programs():
 
 @programs.route('/<key>/info')
 def get_program_info(key):
-	if not r.exists(key + ':info'):
+	if not r.exists(f'{key}:info'):
 		return 'Not found', 404
-	data = json.loads(r.get(key + ':info'))
+	data = json.loads(r.get(f'{key}:info'))
 	return data, 200
 
 
 @programs.route('/<key>/verify')
 def get_program_verify(key):
-	if not r.exists(key + ':verify'):
+	if not r.exists(f'{key}:verify'):
 		return 'Not found', 404
-	data = r.get(key + ':verify')
+	data = r.get(f'{key}:verify')
 	return data, 200
+
+
+@programs.route('/<key>/records')
+def get_proggram_records(key):
+	if not r.exists(f'{key}:info'):
+		return 'Not found', 404
+	elif not r.exists(f'{key}:records'):
+		return json.loads({}), 200
+	return [json.loads(record) for record in r.lrange(f'{key}:records', 0, -1)]

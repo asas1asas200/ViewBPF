@@ -10,10 +10,14 @@
     "@highlightjs/vue-plugin": "^2.1.0",
     "@vue/cli-service": "^5.0.8",
     "axios": "^1.2.0",
+    "chart.js": "^4.0.1",
+    "chartjs-adapter-moment": "^1.0.1",
     "element-plus": "^2.2.21",
     "highlight.js": "^11.7.0",
+    "moment": "^2.29.4",
     "vite-raw-plugin": "^1.0.1",
     "vue": "^3.2.41",
+    "vue-chartjs": "^5.0.1",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 import json
 from flask import Blueprint, request
-from ..model import r
+from model import r
 
 
 example = Blueprint('example', __name__)

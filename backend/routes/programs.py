@@ -2,7 +2,7 @@ import json
 
 from flask import Blueprint
 
-from ..model import r
+from model import r
 
 programs = Blueprint('programs', __name__)
 

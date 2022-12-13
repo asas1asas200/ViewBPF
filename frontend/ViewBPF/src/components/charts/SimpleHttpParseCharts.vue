@@ -10,9 +10,18 @@ import { Line } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, TimeScale, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js'
 import 'chartjs-adapter-moment'
 
-const route = useRoute()
 ChartJS.register(Title, Tooltip, TimeScale, CategoryScale, LinearScale, PointElement, LineElement)
-const result = await axios.get(`http://localhost:5000/api/programs/${route.params.id}/records`).then(async (res) => {
+
+const programID = useRoute().params.id
+const socket = io("http://localhost:5000");
+socket.on("connect", () => {
+  console.log("[Socketio] Connected to server")
+})
+socket.on("update", () => {
+  console.log("[Socketio] Update")
+  //update()
+})
+const result = await axios.get(`http://localhost:5000/api/programs/${programID}/records`).then(async (res) => {
   let counts = new Map();
   for(let record of res.data) {
     let time = record.time.slice(0, -3)

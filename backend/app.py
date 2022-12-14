@@ -1,5 +1,3 @@
-import json
-
 from flask import Flask, request
 from flask_cors import CORS
 from flask_socketio import SocketIO
@@ -25,18 +23,12 @@ def hello_world():
 	return '<p>Hello, World!</p>'
 
 
-'''
-@programs.route('/<key>/update', methods=['POST'])
+# Not RESTful but it's a quick hack
+@programs.route('/<key>/update')
 def update_program(key):
 	if not r.exists(f'{key}:info'):
 		return 'Not found', 404
-	data = request.get_json()
-'''
-
-
-@app.route('/update')
-def update():
-	socketio.emit('update', json.dumps({'x': 123, 'y': 456}))
+	socketio.emit(f'{key}/update')
 	return 'OK', 200
 
 

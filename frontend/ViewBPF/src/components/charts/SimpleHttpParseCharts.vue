@@ -1,8 +1,10 @@
 <template>
-  <Line :data=data :options=options />
+  <Line :data="data" :options=options />
+  <el-button type="primary" plain @click=helo>Primary</el-button>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import axios from 'axios'
@@ -14,47 +16,54 @@ ChartJS.register(Title, Tooltip, TimeScale, CategoryScale, LinearScale, PointEle
 
 const programID = useRoute().params.id
 const socket = io("http://localhost:5000");
+
+function helo() {
+  updateChart()
+}
+
 socket.on("connect", () => {
   console.log("[Socketio] Connected to server")
 })
-socket.on("update", () => {
-  console.log("[Socketio] Update")
-  //update()
-})
-const result = await axios.get(`http://localhost:5000/api/programs/${programID}/records`).then(async (res) => {
-  let counts = new Map();
-  for(let record of res.data) {
-    let time = record.time.slice(0, -3)
-    if (counts.has(time)) {
-      let data = counts.get(time)
-      data.counts++
-      data.log.push(record.data)
-      counts.set(time, data)
-    } else {
-      counts.set(time, {counts: 1, log: [record.data]})
+
+socket.on(`${programID}/update`, () => updateChart())
+
+async function updateChart() {
+  const result = await axios.get(`http://localhost:5000/api/programs/${programID}/records`).then(async (res) => {
+    let counts = new Map();
+    for(let record of res.data) {
+      let time = record.time.slice(0, -3)
+      if (counts.has(time)) {
+        let data = counts.get(time)
+        data.counts++
+        data.log.push(record.data)
+        counts.set(time, data)
+      } else {
+        counts.set(time, {counts: 1, log: [record.data]})
+      }
     }
-  }
 
-  let ret = []
-  counts.forEach((value, key) => ret.push({x: key, nested: value}))
-  return ret
-}).catch(err => {
-  ElMessage({
-  message: err,
-  type: 'error'
+    let ret = []
+    counts.forEach((value, key) => ret.push({x: key, nested: value}))
+    return ret
+  }).catch(err => {
+    ElMessage({
+    message: err,
+    type: 'error'
+    })
   })
-})
 
-const data = {
-  datasets: [{
-    label: 'HTTP Request Counts',
-    data: result,
-    fill: false,
-    borderColor: 'rgb(75, 192, 192)',
-    tension: 0.1,
-    stepped: true,
-  }],
+  data.value = {
+    datasets: [{
+      label: 'HTTP Request Counts',
+      data: result,
+      fill: false,
+      borderColor: 'rgb(75, 192, 192)',
+      tension: 0.1,
+      stepped: true,
+    }],
+  }
 }
+
 const options = {
   scales: {
     x: {
@@ -86,4 +95,7 @@ const options = {
     }
   }
 }
+
+const data = ref({})
+await updateChart()
 </script>

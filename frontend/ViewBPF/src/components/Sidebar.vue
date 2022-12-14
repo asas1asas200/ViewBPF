@@ -23,6 +23,7 @@
   .el-menu:not(.el-menu--collapse) {
     width: 300px;
   }
+
 </style>
 
 <script lang="ts" setup>

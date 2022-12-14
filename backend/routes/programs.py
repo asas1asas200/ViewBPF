@@ -33,5 +33,5 @@ def get_proggram_records(key):
 	if not r.exists(f'{key}:info'):
 		return 'Not found', 404
 	elif not r.exists(f'{key}:records'):
-		return json.loads({}), 200
+		return {}, 200
 	return [json.loads(record) for record in r.lrange(f'{key}:records', 0, -1)]

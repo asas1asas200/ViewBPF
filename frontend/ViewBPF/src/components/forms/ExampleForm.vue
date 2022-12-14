@@ -9,7 +9,7 @@
       </el-radio-group>
     </el-form-item>
     <el-collapse-transition>
-      <component :is="formMapping[form.program]" :options="form.options"></component>
+      <component :is="programMapping[form.program].form" :options="form.options"></component>
     </el-collapse-transition>
     <el-form-item label="Code">
       <el-scrollbar max-height="60vh">
@@ -37,24 +37,28 @@ import SimpleHttpParseCode from '@/assets/codes/http-parse-simple.c'
 import DiskSnoop from '@/components/forms/options/DiskSnoop.vue'
 import DiskSnoopCode from '@/assets/codes/disk-snoop.c'
 
+const highlightjs = hljsVuePlugin.component
+
 const programs = [
   'Simple HTTP Parse',
   'Disk Snoop',
 ]
 
-const formMapping = {
-  'Simple HTTP Parse': SimpleHttpParse,
-  'Disk Snoop': DiskSnoop
+const programMapping = {
+  'Simple HTTP Parse': {
+    form: SimpleHttpParse,
+    code: SimpleHttpParseCode,
+    url: '/api/example/simple_http_parse'
+  },
+  'Disk Snoop': {
+    form: DiskSnoop,
+    code: DiskSnoopCode,
+    url: '/api/example/disk_snoop'
+  }
 }
 
-const sampleCodeMapping = {
-  'Simple HTTP Parse': SimpleHttpParseCode,
-  'Disk Snoop': DiskSnoopCode
-}
 
-const highlightjs = hljsVuePlugin.component
-
-const code = ref(sampleCodeMapping['Simple HTTP Parse'])
+const code = ref(programMapping['Simple HTTP Parse'].code)
 
 // do not use same name with ref
 const form = reactive({
@@ -66,13 +70,13 @@ const form = reactive({
 })
 
 const onProgramChange = () => {
-  code.value = sampleCodeMapping[form.program]
+  code.value = programMapping[form.program].code
 }
 
 const onSubmit = () => {
   switch(form.program) {
     case 'Simple HTTP Parse':
-      axios.post('http://localhost:5000/api/example/simple_http_parse', form).then(res => {
+      axios.post(`http://localhost:5000${programMapping[form.program].url}`, form).then(res => {
         ElMessage({
           message: res.data,
           type: 'success'

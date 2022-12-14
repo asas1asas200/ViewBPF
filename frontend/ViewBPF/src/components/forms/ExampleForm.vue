@@ -9,7 +9,7 @@
       </el-radio-group>
     </el-form-item>
     <el-collapse-transition>
-    <simple-http-parse :options="form.options" v-if="form.program === 'Simple HTTP Parse'"/>
+      <component :is="formMapping[form.program]" :options="form.options"></component>
     </el-collapse-transition>
     <el-form-item label="Code">
       <el-scrollbar max-height="60vh">
@@ -34,30 +34,36 @@ import hljsVuePlugin from '@highlightjs/vue-plugin'
 import 'highlight.js/styles/atom-one-dark.css'
 import SimpleHttpParse from '@/components/forms/options/SimpleHttpParse.vue'
 import SimpleHttpParseCode from '@/assets/codes/http-parse-simple.c'
+import DiskSnoop from '@/components/forms/options/DiskSnoop.vue'
+import DiskSnoopCode from '@/assets/codes/disk-snoop.c'
 
 const programs = [
   'Simple HTTP Parse',
-  'Disk Monitoring',
+  'Disk Snoop',
 ]
+
+const formMapping = {
+  'Simple HTTP Parse': SimpleHttpParse,
+  'Disk Snoop': DiskSnoop
+}
+
+const sampleCodeMapping = {
+  'Simple HTTP Parse': SimpleHttpParseCode,
+  'Disk Snoop': DiskSnoopCode
+}
 
 const highlightjs = hljsVuePlugin.component
 
-
-const code = ref('')
+const code = ref(sampleCodeMapping['Simple HTTP Parse'])
 
 // do not use same name with ref
 const form = reactive({
   name: '',
-  program: '',
+  program: 'Simple HTTP Parse',
   desc: '',
   code: code,
   options: {}
 })
-
-const sampleCodeMapping = {
-  'Simple HTTP Parse': SimpleHttpParseCode,
-  'Disk Monitoring': ''
-}
 
 const onProgramChange = () => {
   code.value = sampleCodeMapping[form.program]

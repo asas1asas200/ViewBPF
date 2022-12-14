@@ -29,4 +29,8 @@ h1 {
   color: #409EFF;
   margin-bottom: 10px;
 }
+
+.el-aside {
+  max-width: fit-content;
+}
 </style>

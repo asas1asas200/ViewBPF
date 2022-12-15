@@ -28,6 +28,7 @@
 <script setup>
 import axios from 'axios'
 import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import 'highlight.js/lib/common'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
@@ -36,6 +37,8 @@ import SimpleHttpParse from '@/components/forms/options/SimpleHttpParse.vue'
 import SimpleHttpParseCode from '@/assets/codes/http-parse-simple.c'
 import DiskSnoop from '@/components/forms/options/DiskSnoop.vue'
 import DiskSnoopCode from '@/assets/codes/disk-snoop.c'
+
+const router = useRouter()
 
 const highlightjs = hljsVuePlugin.component
 
@@ -79,6 +82,7 @@ const onSubmit = () =>
       message: res.data,
       type: 'success'
     })
+    router.push({path: "/"})
   }).catch(err => {
     ElMessage({
       message: err,

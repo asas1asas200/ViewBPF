@@ -15,9 +15,10 @@ class Runner:
 			self.key = str(uuid4())
 			if not self.r.exists(self.key):
 				break
-		self.r.rpush('programs', json.dumps({'name': self.name, 'key': self.key}))
+		self.r.rpush('programs', json.dumps(
+			{'name': self.name, 'key': self.key}))
 		self.r.set(self.key + ':info', json.dumps(
-			{'name': self.name, 'program': self.program, 'code': self.code}))
+			{'name': self.name, 'program': self.program, 'code': self.code, 'state': 'running'}))
 
 	def log(self, data):
 		data['time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')

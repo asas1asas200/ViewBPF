@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+  <el-tabs v-model="activeName">
     <el-tab-pane label="Examples" name="examples"><example-form /></el-tab-pane>
     <el-tab-pane label="Custom" name="custom">The development of custom eBPF programs is in progress.</el-tab-pane>
   </el-tabs>
@@ -9,10 +9,6 @@ import { ref } from 'vue'
 import ExampleForm from '@/components/forms/ExampleForm.vue'
 
 const activeName = ref('examples')
-
-const handleClick = (tab, Event) => {
-  //console.log(tab, event)
-}
 </script>
 <style>
 .demo-tabs > .el-tabs__content {

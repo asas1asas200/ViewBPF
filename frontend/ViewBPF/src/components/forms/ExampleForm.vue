@@ -73,28 +73,17 @@ const onProgramChange = () => {
   code.value = programMapping[form.program].code
 }
 
-const onSubmit = () => {
-  switch(form.program) {
-    case 'Simple HTTP Parse':
-      axios.post(`http://localhost:5000${programMapping[form.program].url}`, form).then(res => {
-        ElMessage({
-          message: res.data,
-          type: 'success'
-        })
-      }).catch(err => {
-        ElMessage({
-          message: err,
-          type: 'error'
-        })
-      })
-      console.log(form)
-      break
-    case 'Disk Monitoring':
-      console.log(form)
-      break
-    default:
-      console.log('No program selected')
-  }
-}
+const onSubmit = () => 
+  axios.post(`http://localhost:5000${programMapping[form.program].url}`, form).then(res => {
+    ElMessage({
+      message: res.data,
+      type: 'success'
+    })
+  }).catch(err => {
+    ElMessage({
+      message: err,
+      type: 'error'
+    })
+  })
 
 </script>

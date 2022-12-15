@@ -16,3 +16,10 @@ def simpleHttpParse():
 	data = request.get_json()
 	r.publish('programs', json.dumps(data))
 	return f"New program {data['name']} created."
+
+
+@example.route('/disk_snoop', methods=['POST'])
+def diskSnoop():
+	data = request.get_json()
+	r.publish('programs', json.dumps(data))
+	return f"New program {data['name']} created."

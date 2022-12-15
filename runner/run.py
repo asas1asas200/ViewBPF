@@ -4,6 +4,7 @@ import json
 from redis import Redis
 
 from examples.http_parse_simple import HttpParseSimple
+from examples.disk_snoop import DiskSnoop
 
 
 def run_program(program):
@@ -15,6 +16,7 @@ def run_program(program):
 if __name__ == '__main__':
 	PROGRAM_MAPPING = {
 		'Simple HTTP Parse': HttpParseSimple,
+		'Disk Snoop': DiskSnoop
 	}
 	r = Redis(host='localhost', port=6379, db=0, decode_responses=True)
 	r.flushall()

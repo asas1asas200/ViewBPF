@@ -17,7 +17,7 @@ void trace_completion(struct pt_regs *ctx, struct request *req) {
 	tsp = start.lookup(&req);
 	if (tsp != 0) {
 		delta = bpf_ktime_get_ns() - *tsp;
-		bpf_trace_printk("%d %x %d\\n", req->__data_len,
+		bpf_trace_printk("%d %x %d", req->__data_len,
 		    req->cmd_flags, delta / 1000);
 		start.delete(&req);
 	}

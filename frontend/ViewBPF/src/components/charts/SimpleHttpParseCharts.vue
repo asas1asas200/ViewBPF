@@ -1,6 +1,5 @@
 <template>
   <Line :data="data" :options=options />
-  <el-button type="primary" plain @click=helo>Primary</el-button>
 </template>
 
 <script setup>
@@ -16,10 +15,6 @@ ChartJS.register(Title, Tooltip, TimeScale, CategoryScale, LinearScale, PointEle
 
 const programID = useRoute().params.id
 const socket = io("http://localhost:5000");
-
-function helo() {
-  updateChart()
-}
 
 socket.on("connect", () => {
   console.log("[Socketio] Connected to server")
@@ -68,9 +63,15 @@ const options = {
   scales: {
     x: {
       type: 'time',
+      ticks: {
+        color: 'white',
+      }
     },
     y: {
-      min: 0
+      min: 0,
+      ticks: {
+        color: 'white'
+      }
     }
   },
   parsing: {
@@ -92,7 +93,7 @@ const options = {
             return [].concat(label, context.raw.nested.log)
         },
       }
-    }
+    },
   }
 }
 

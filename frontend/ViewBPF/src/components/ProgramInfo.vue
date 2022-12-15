@@ -11,7 +11,7 @@
         </el-collapse-item>
       </el-collapse>
     </el-scrollbar>
-    <SimpleHttpParseCharts />
+    <component :is=charts></component>
   </div>
 </template>
 
@@ -23,8 +23,14 @@ import 'highlight.js/lib/common'
 import 'highlight.js/styles/atom-one-dark.css'
 import hljsVuePlugin from '@highlightjs/vue-plugin'
 import SimpleHttpParseCharts from './charts/SimpleHttpParseCharts.vue'
+import DiskSnoopChart from './charts/DiskSnoopCharts.vue'
 
 const highlightjs = hljsVuePlugin.component
+
+const chartsMapping = {
+  'Simple HTTP Parse': SimpleHttpParseCharts,
+  'Disk Snoop': DiskSnoopChart
+}
 
 const route = useRoute()
 const info = await axios.get('http://localhost:5000/api/programs/' + route.params.id + '/info').then(async (res) => {
@@ -43,4 +49,5 @@ const verify = await axios.get('http://localhost:5000/api/programs/' + route.par
 	type: 'error'
   })
 })
+const charts = chartsMapping[info.program]
 </script>

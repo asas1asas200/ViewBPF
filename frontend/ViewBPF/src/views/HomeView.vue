@@ -9,8 +9,6 @@
         </el-row>
       </el-card>
     </el-scrollbar>
-    <el-button type="primary" @click="ping"> Ping </el-button>
-    <el-button type="success" @click="test"> Test </el-button>
   </div>
 </template>
 
@@ -38,31 +36,4 @@ axios.get('http://localhost:5000/api/programs').then(res => {
     type: 'error'
   })
 })
-
-const ping = () => {
-  axios.get('http://localhost:5000/api/ping').then(res => {
-    ElMessage({
-      message: res.data,
-      type: 'success'
-    })
-  }).catch(err => {
-    ElMessage({
-      message: err,
-      type: 'error'
-    })
-  })
-}
-const test = () => {
-  axios.get('http://localhost:5000/api/example/test').then(res => {
-    ElMessage({
-      message: res.data,
-      type: 'success'
-    })
-  }).catch(err => {
-    ElMessage({
-      message: err,
-      type: 'error'
-    })
-  })
-}
 </script>

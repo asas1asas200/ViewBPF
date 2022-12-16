@@ -95,6 +95,11 @@ const options = {
         },
       }
     },
+    legend: {
+      labels: {
+        color: 'white'
+      }
+    }
   }
 }
 

@@ -42,7 +42,7 @@ if __name__ == '__main__':
 				p.start()
 				running_programs[runner.key] = p
 			case 'stop':
-				key = body['data']['programID']
+				key = json.loads(body['data'])['programID']
 				running_programs[key].kill()
 				info = json.loads(r.get(f'{key}:info'))
 				info['state'] = 'finished'

@@ -10,6 +10,7 @@
               <Finished v-else-if="program.state === 'finished'" />
               <CircleCloseFilled v-else />
             </el-icon>
+            {{program.state}}
           </el-col>
           <el-col :span="8">{{program.name}}</el-col>
           <el-col :span="14">{{program.key}}</el-col>

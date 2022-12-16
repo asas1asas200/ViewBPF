@@ -23,6 +23,14 @@ def get_all_programs_state():
 	return ret, 200
 
 
+@programs.route('/<key>/stop')
+def stop_program(key):
+	if not r.exists(f'{key}:info'):
+		return 'Not found', 404
+	r.publish('stop', json.dumps({'programID': key}))
+	return 'OK', 200
+
+
 @programs.route('/<key>/info')
 def get_program_info(key):
 	if not r.exists(f'{key}:info'):

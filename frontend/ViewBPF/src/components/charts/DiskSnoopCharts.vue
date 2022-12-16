@@ -19,6 +19,7 @@ let counts = [0, 0]
 const lineData = await 
   axios.get(`http://localhost:5000/api/programs/${programID}/records`)
     .then((res) => {
+      if(Object.keys(res.data).length === 0) return []
       let typeW = {
         label: 'Write latency',
         data: [],

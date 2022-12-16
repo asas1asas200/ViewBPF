@@ -24,6 +24,7 @@ socket.on(`${programID}/update`, () => updateChart())
 
 async function updateChart() {
   const result = await axios.get(`http://localhost:5000/api/programs/${programID}/records`).then(async (res) => {
+    if(Object.keys(res.data).length === 0) return []
     let counts = new Map();
     for(let record of res.data) {
       let time = record.time.slice(0, -3)

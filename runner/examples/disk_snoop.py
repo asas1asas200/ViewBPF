@@ -11,6 +11,7 @@ class DiskSnoop(Runner):
 	def __init__(self, r, name, program, code, **kwargs):
 		super().__init__(r, name, program, code)
 		self.program = program
+		self.norealtime = True
 
 	def build(self):
 		self.bpf = BPF(text=self.code, debug=0)

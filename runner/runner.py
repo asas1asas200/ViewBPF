@@ -24,6 +24,8 @@ class Runner:
 		data['time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 		self.r.rpush(self.key + ':records', json.dumps(data))
 		# TODO: use async
+		if hasattr(self, 'norealtime'):
+			return
 		requests_get(f'http://localhost:5000/api/programs/{self.key}/update')
 
 	def verify(self):

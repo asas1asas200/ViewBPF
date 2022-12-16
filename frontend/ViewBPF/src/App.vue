@@ -1,8 +1,8 @@
 <template>
   <div class="common-layout">
   <el-container>
-    <el-aside>
-      <Sidebar/>
+    <el-aside style="position: sticky;">
+      <Sidebar />
     </el-aside>
     <el-main>
       <router-view />

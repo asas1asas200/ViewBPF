@@ -12,6 +12,17 @@ def get_programs():
 	return [json.loads(pinfo) for pinfo in r.lrange('programs', 0, -1)] if r.exists('programs') else []
 
 
+@programs.route('/state')
+def get_all_programs_state():
+	if not r.exists('programs'):
+		return {}, 200
+	ret = {}
+	for program in r.lrange('programs', 0, -1):
+		program = json.loads(program)
+		ret[program['key']] = json.loads(r.get(f'{program["key"]}:info'))['state']
+	return ret, 200
+
+
 @programs.route('/<key>/info')
 def get_program_info(key):
 	if not r.exists(f'{key}:info'):

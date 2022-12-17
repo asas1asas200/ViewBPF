@@ -2,6 +2,8 @@
 
 ViewBPF, a frontend eBPF program results viewer.
 
+![cover](https://i.imgur.com/ihs4DLq.png)
+
 ## Building
 
 There were four components need to setup.
